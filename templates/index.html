@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Random Objects</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+    	.main {
+    		margin: 0 auto;
+    		padding: 10px;
+		  	width: 90%;
+		}
+		.button {
+			border: 1px solid black;
+			padding: 5px 10px;
+		}
+    </style>
+</head>
+<body>
+    <div class="main">
+    	<section>
+    		<h2>Random Objects</h2>
+    		<h4>Generate and Report</h4>
+    	</section>
+    	<section>
+    		<input type="button" class="button" id="btnGenerate" value="Generate" />
+    		<p id="generator"></p>
+    	<section>
+    	<section>
+    		<input type="button" class="button" id="btnReport" value="Report" />
+    		<p id="report"></p>
+    	<section>
+    </div>
+</body>
+<script type=text/javascript>
+	$(function() {
+    	$('#btnGenerate').on('click', function(e) {
+            e.preventDefault()
+			$('#generator').html("Generating Objects...");
+            $.getJSON('/generate',
+                function(data) {
+              		console.log(data)
+				  	$('#generator').html(`Link: <a href="${data.fileName}">${data.fileName}</a>`);
+            	}
+			);
+            return false;
+		});
+		$('#btnReport').on('click', function(e) {
+            e.preventDefault()
+			$('#report').html("Generating Report...");
+            $.getJSON('/report',
+            	function(data) {
+              		console.log(data)
+					$('#report').html(`
+						Alphabetics: ${data.alphabetics}<br>
+						Alphanumerics: ${data.alphanumerics}<br>
+						Integers: ${data.integers}<br>
+						Reals: ${data.reals}
+					`);
+            	}
+			);
+            return false;
+		});
+	});
+</script>
+</html>
